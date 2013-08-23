@@ -12,7 +12,7 @@ class Field_Color_picker {
 
 	public function __construct()
 	{
-		// Determine the upload.php path
+		// Determine the field type path
 		if (file_exists(SHARED_ADDONPATH.'field_types/'.$this->field_type_slug.'/field.'.$this->field_type_slug.'.php'))
 		{
 			$this->path = SHARED_ADDONPATH.'field_types/'.$this->field_type_slug.'/';
@@ -41,7 +41,7 @@ class Field_Color_picker {
 			width: 22px;
 			display: inline-block;
 			margin-bottom: -5px;
-			background: url('.$this->path.'/img/swatch.png) no-repeat center center;
+			background: url('.site_url($this->path.'/img/swatch.png').') no-repeat center center;
 			}
 
 			.color-picker-swatch.disabled
