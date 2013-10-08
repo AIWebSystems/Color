@@ -53,7 +53,7 @@ class Field_Color_picker {
 		);
 	}
 
-	public function field_setup_event($stream, $method, $field)
+	public function field_setup_event($field = false)
 	{
 		ci()->type->add_js('color_picker', 'jquery.miniColors.js');
 		ci()->type->add_css('color_picker', 'jquery.miniColors.css');
