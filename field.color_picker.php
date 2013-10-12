@@ -1,14 +1,15 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Field_Color_picker {
+use Pyro\Module\Streams_core\Core\Field\AbstractField;
+
+class Field_Color_picker extends AbstractField
+{
 
 	public $field_type_slug             = 'color_picker';
 	public $db_col_type                 = 'varchar';
 	public $version                     = '1.0';
 	public $author                      = array('name' => 'Ryan Thompson - AI Web Systems, Inc.');
 	public $custom_parameters           = array('default_color', 'options');
-
-	private $ci;
 
 	public function __construct()
 	{
@@ -53,60 +54,58 @@ class Field_Color_picker {
 		);
 	}
 
-	public function field_setup_event($field = false)
+	public function field_setup_event()
 	{
 		ci()->type->add_js('color_picker', 'jquery.miniColors.js');
 		ci()->type->add_css('color_picker', 'jquery.miniColors.css');
 	}
 
-	public function form_output($params, $entry_id, $field)
+	public function form_output()
 	{
-		$options['name'] 	= $params['form_slug'];
-		$options['id']		= $params['form_slug'];
-		$options['value']	= empty($params['value']) ? $field->field_data['default_color'] : $params['value'];
+		$options['name'] 	= $this->form_slug;
+		$options['id']		= $this->form_slug;
+		$options['value']	= empty($this->value) ? $this->getParameter('default_color') : $this->value;
 		$options['class']   = 'color_picker';
 
 		if(isset($field->field_data['options']['disable']))
 		{
-		if($field->field_data['options']['disable'] == 'yes')
-		{
-		$options['disabled'] = 'disabled';
-		}
+			if($field->field_data['options']['disable'] == 'yes')
+			{
+				$options['disabled'] = 'disabled';
+			}
 		}
 
 		if(isset($field->field_data['options']['readonly']))
 		{
-		if($field->field_data['options']['readonly'] == 'yes')
-		{
-		$options['readonly'] = 'readonly';
-		}
+			if($field->field_data['options']['readonly'] == 'yes')
+			{
+				$options['readonly'] = 'readonly';
+			}
 		}
 
 		if(isset($field->field_data['options']['ishidden']))
 		{
-		if($field->field_data['options']['ishidden'] == 'yes')
-		{
-		$out = '<input type="hidden" value="'.$params['value'].'" name="'.$params['form_slug'].'" id="'.$params['form_slug'].'" />';
-		}
-		else
-		{
-		$out = form_input($options);
-		}
-		}
-		else
-		{
-		$out = form_input($options);
+			if($field->field_data['options']['ishidden'] == 'yes')
+			{
+				$out = '<input type="hidden" value="'.$params['value'].'" name="'.$params['form_slug'].'" id="'.$params['form_slug'].'" />';
+			}
+			else
+			{
+				$out = form_input($options);
+			}
+		} else {
+			$out = form_input($options);
 		}
 
 		return $out;
 	}
 
-	public function pre_output($input, $data)
+	public function pre_output()
 	{
-		return $input;
+		return $this->input;
 	}
 
-	public function pre_output_plugin($input, $params, $row_slug)
+	public function pre_output_plugin()
 	{
 		ci()->type->add_misc(
 		'
@@ -129,8 +128,8 @@ class Field_Color_picker {
 		);
 
 		return array(
-			'code'      => $input,
-			'swatch'    => '<span class="color-picker-swatch" style="background-color: '.$input.'"></span>',
+			'code'      => $this->input,
+			'swatch'    => '<span class="color-picker-swatch" style="background-color: '.$this->input.'"></span>',
 			);
 	}
 
@@ -153,5 +152,4 @@ class Field_Color_picker {
 		$out .= '<label class="checkbox">'.form_checkbox('options[ishidden]', 'yes', isset($value['ishidden'])).'&nbsp;'.lang('streams:color_picker.ishidden').'</label>';
 		return $out;
 	}
-
 }
