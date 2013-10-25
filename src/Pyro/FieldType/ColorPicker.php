@@ -2,14 +2,22 @@
 
 use Pyro\Module\Streams_core\Core\Field\AbstractField;
 
-class Field_Color_picker extends AbstractField
+class ColorPicker extends AbstractField
 {
+	public $field_type_slug = 'color_picker';
+	
+	public $db_col_type = 'varchar';
+	
+	public $version = '1.0';
 
-	public $field_type_slug             = 'color_picker';
-	public $db_col_type                 = 'varchar';
-	public $version                     = '1.0';
-	public $author                      = array('name' => 'Ryan Thompson - AI Web Systems, Inc.');
-	public $custom_parameters           = array('default_color', 'options');
+	public $custom_parameters = array(
+		'default_color',
+		'options'
+		);
+
+	public $author = array(
+		'name' => 'Ryan Thompson - AI Web Systems, Inc.'
+		);
 
 	public function __construct()
 	{
@@ -54,13 +62,13 @@ class Field_Color_picker extends AbstractField
 		);
 	}
 
-	public function field_setup_event()
+	public function fieldSetupEvent()
 	{
 		ci()->type->add_js('color_picker', 'jquery.miniColors.js');
 		ci()->type->add_css('color_picker', 'jquery.miniColors.css');
 	}
 
-	public function form_output()
+	public function formOutput()
 	{
 		$options['name'] 	= $this->form_slug;
 		$options['id']		= $this->form_slug;
@@ -100,12 +108,12 @@ class Field_Color_picker extends AbstractField
 		return $out;
 	}
 
-	public function pre_output()
+	public function preOutput()
 	{
 		return $this->input;
 	}
 
-	public function pre_output_plugin()
+	public function preOutputPlugin()
 	{
 		ci()->type->add_misc(
 		'
@@ -133,7 +141,7 @@ class Field_Color_picker extends AbstractField
 			);
 	}
 
-	public function param_default_color($value = null)
+	public function paramDefaultColor($value = null)
 	{
 		$out = form_input('default_color', $value, 'class="color_picker"');
 		$out .=
@@ -143,7 +151,7 @@ class Field_Color_picker extends AbstractField
 		return $out;
 	}
 
-	public function param_options($value = null)
+	public function paramOptions($value = null)
 	{
 		$line_end = (defined('ADMIN_THEME')) ? '<br />' : null;
 		$out = '';
