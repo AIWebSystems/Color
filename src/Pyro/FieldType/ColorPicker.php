@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php namespace Pyro\FieldType;
 
 use Pyro\Module\Streams_core\Core\Field\AbstractField;
 
