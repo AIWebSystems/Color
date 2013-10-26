@@ -43,6 +43,7 @@ class ColorPicker extends AbstractField
 		$options['name'] = $this->form_slug;
 		$options['id'] = $this->form_slug;
 		$options['value'] = $this->value;
+		$options['class'] = 'form-control';
 
 		$out = form_input($options);
 
