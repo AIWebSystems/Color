@@ -34,76 +34,28 @@ class ColorPicker extends AbstractField
 
 	public function event()
 	{
-		ci()->type->add_js('color_picker', 'jquery.miniColors.js');
-		ci()->type->add_css('color_picker', 'jquery.miniColors.css');
-		ci()->type->add_misc(
-			'<script type="text/javascript">
-			$(document).ready(function(){
-			$(".color_picker").miniColors();
-			});
-			</script>
-
-			<style type="text/css">
-			.color-picker-swatch
-			{
-			height: 22px;
-			width: 22px;
-			display: inline-block;
-			margin-bottom: -5px;
-			background: url('.site_url($this->path.'/img/swatch.png').') no-repeat center center;
-			}
-
-			.color-picker-swatch.disabled
-			{
-			background-color: #aaa !important;
-			}
-			</style>
-			'
-		);
-	}
-
-	public function fieldSetupEvent()
-	{
-		ci()->type->add_js('color_picker', 'jquery.miniColors.js');
-		ci()->type->add_css('color_picker', 'jquery.miniColors.css');
+		$this->js('colorpicker.js');
+		$this->css('colorpicker.css');
 	}
 
 	public function formOutput()
 	{
-		$options['name'] 	= $this->form_slug;
-		$options['id']		= $this->form_slug;
-		$options['value']	= empty($this->value) ? $this->getParameter('default_color') : $this->value;
-		$options['class']   = 'color_picker';
+		$options['name'] = $this->form_slug;
+		$options['id'] = $this->form_slug;
+		$options['value'] = $this->value;
 
-		if(isset($field->field_data['options']['disable']))
-		{
-			if($field->field_data['options']['disable'] == 'yes')
-			{
-				$options['disabled'] = 'disabled';
-			}
-		}
+		$out = form_input($options);
 
-		if(isset($field->field_data['options']['readonly']))
-		{
-			if($field->field_data['options']['readonly'] == 'yes')
-			{
-				$options['readonly'] = 'readonly';
-			}
-		}
-
-		if(isset($field->field_data['options']['ishidden']))
-		{
-			if($field->field_data['options']['ishidden'] == 'yes')
-			{
-				$out = '<input type="hidden" value="'.$params['value'].'" name="'.$params['form_slug'].'" id="'.$params['form_slug'].'" />';
-			}
-			else
-			{
-				$out = form_input($options);
-			}
-		} else {
-			$out = form_input($options);
-		}
+		$out .= '
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$("#'.$this->form_slug.'").ColorPicker({
+						onChange: function (hsb, hex, rgb) {
+							$("input[name=\''.$this->form_slug.'\']").val("#" + hex);
+						}
+					});
+				});
+			</script>';
 
 		return $out;
 	}
@@ -115,26 +67,6 @@ class ColorPicker extends AbstractField
 
 	public function preOutputPlugin()
 	{
-		ci()->type->add_misc(
-		'
-		<style type="text/css">
-		.color-picker-swatch
-		{
-		height: 22px;
-		width: 22px;
-		display: inline-block;
-		margin-bottom: -5px;
-		background: url('.$this->path.'/img/swatch.png) no-repeat center center;
-		}
-
-		.color-picker-swatch.disabled
-		{
-		background-color: #aaa !important;
-		}
-		</style>
-		'
-		);
-
 		return array(
 			'code'      => $this->input,
 			'swatch'    => '<span class="color-picker-swatch" style="background-color: '.$this->input.'"></span>',
