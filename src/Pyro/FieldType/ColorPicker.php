@@ -38,7 +38,7 @@ class ColorPicker extends AbstractField
 		$this->css('colorpicker.css');
 	}
 
-	public function formOutput()
+	public function formInput()
 	{
 		$options['name'] = $this->form_slug;
 		$options['id'] = $this->form_slug;
@@ -61,7 +61,7 @@ class ColorPicker extends AbstractField
 		return $out;
 	}
 
-	public function preOutput()
+	public function stringOutput()
 	{
 		return $this->input;
 	}
