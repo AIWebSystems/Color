@@ -53,6 +53,9 @@ class ColorPicker extends AbstractFieldType
 					$("#'.$this->form_slug.'").ColorPicker({
 						onChange: function (hsb, hex, rgb) {
 							$("input[name=\''.$this->form_slug.'\']").val("#" + hex);
+						},
+						onBeforeShow: function () {
+							$(this).ColorPickerSetColor(this.value);
 						}
 					});
 				});
