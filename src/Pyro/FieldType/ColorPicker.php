@@ -6,7 +6,7 @@ class ColorPicker extends AbstractFieldType
 {
 	public $field_type_slug = 'color_picker';
 	
-	public $db_col_type = 'varchar';
+	public $db_col_type = 'string';
 	
 	public $version = '1.0';
 
