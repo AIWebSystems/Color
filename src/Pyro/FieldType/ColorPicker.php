@@ -66,14 +66,14 @@ class ColorPicker extends AbstractFieldType
 
 	public function stringOutput()
 	{
-		return $this->input;
+		return $this->value;
 	}
 
 	public function preOutputPlugin()
 	{
 		return array(
-			'code'      => $this->input,
-			'swatch'    => '<span class="color-picker-swatch" style="background-color: '.$this->input.'"></span>',
+			'code'      => $this->value,
+			'swatch'    => '<span class="color-picker-swatch" style="background-color: '.$this->value.'"></span>',
 			);
 	}
 
