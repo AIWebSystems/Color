@@ -1,8 +1,8 @@
 <?php namespace Pyro\FieldType;
 
-use Pyro\Module\Streams_core\AbstractFieldType;
+use Pyro\Module\Streams\FieldType\FieldTypeAbstract;
 
-class ColorPicker extends AbstractFieldType
+class ColorPicker extends FieldTypeAbstract
 {
     public $field_type_slug = 'color_picker';
     
