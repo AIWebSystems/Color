@@ -2,7 +2,7 @@
 
 use Pyro\Module\Streams\FieldType\FieldTypeAbstract;
 
-class ColorPicker extends FieldTypeAbstract
+class Color extends FieldTypeAbstract
 {
     /**
      * Field type slug
