@@ -49,7 +49,7 @@ class Color extends FieldTypeAbstract
      */
     public function formInput()
     {
-        $out = form_input($this->form_slug, $this->value);
+        $out = form_input($this->form_slug, $this->value, 'class="form-control"');
 
         $out .= '
             <script type="text/javascript">
